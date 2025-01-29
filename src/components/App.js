@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from "react";
-import UseMemoComponent from "./UseMemo";
-import ReactMemoComponent from "./ReactMemo";
+import UseMemoComponent from "./UseMemoComponent";
+import ReactMemoComponent from "./ReactMemoComponent";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [count, setCount] = useState(0);
   const [inputValue, setInputValue] = useState("");
+  const [skills, setSkills] = useState([]);
 
   const addTodo = () => {
     setTodos([...todos, "New todo"]);
@@ -26,21 +27,30 @@ const App = () => {
     }
   };
 
+  const addSkill = () => {
+    if (inputValue.length > 0) {
+      setSkills([...skills, inputValue]);
+      setInputValue("");
+    }
+  };
+
   const memoizedTodos = useMemo(() => todos, [todos]);
 
   return (
     <div>
       <h1>Todo List</h1>
-      <button onClick={addTodo}>Add todo</button>
-      <button onClick={increment}>Increment</button>
-      <p>Count: {count}</p>
+      <button id="add-todo" onClick={addTodo}>Add todo</button>
+      <button id="increment" onClick={increment}>Increment</button>
+      <p id="count">Count: {count}</p>
       <input
+        id="task-input"
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         placeholder="Enter task"
       />
-      <button onClick={submitTodo}>Submit</button>
+      <button id="submit-todo" onClick={submitTodo}>Submit</button>
+      <button id="add-skill" onClick={addSkill}>Add Skill</button>
       <UseMemoComponent todos={memoizedTodos} />
       <ReactMemoComponent todos={todos} />
     </div>
