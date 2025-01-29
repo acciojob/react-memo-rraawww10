@@ -1,33 +1,48 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import UseMemoComponent from './UseMemoComponent';
-import ReactMemoComponent from './ReactMemoComponent';
+import React, { useState, useMemo } from "react";
+import UseMemoComponent from "./UseMemo";
+import ReactMemoComponent from "./ReactMemo";
 
 const App = () => {
-  // ... existing code ...
+  const [todos, setTodos] = useState([]);
+  const [count, setCount] = useState(0);
+  const [inputValue, setInputValue] = useState("");
+
+  const addTodo = () => {
+    setTodos([...todos, "New todo"]);
+  };
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const submitTodo = () => {
+    if (inputValue.length > 5) {
+      setTodos([...todos, inputValue]);
+      setInputValue("");
+    }
+  };
+
+  const memoizedTodos = useMemo(() => todos, [todos]);
 
   return (
     <div>
       <h1>Todo List</h1>
-      <button onClick={incrementCounter}>Increment Counter: {counter}</button>
-      <br />
-      <input 
-        type="text" 
-        value={newTodo} 
-        onChange={handleNewTodoChange} 
-        placeholder="Enter new todo (min 6 characters)" 
+      <button onClick={addTodo}>Add todo</button>
+      <button onClick={increment}>Increment</button>
+      <p>Count: {count}</p>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Enter task"
       />
-      <button onClick={addTodo}>Add Todo</button>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
-        ))}
-      </ul>
-
-      <h2>UseMemo Component</h2>
-      <UseMemoComponent expensiveCalculation={expensiveCalculation} />
-
-      <h2>React.memo Component</h2>
-      <ReactMemoComponent todos={todos} /> 
+      <button onClick={submitTodo}>Submit</button>
+      <UseMemoComponent todos={memoizedTodos} />
+      <ReactMemoComponent todos={todos} />
     </div>
   );
 };
