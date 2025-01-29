@@ -3,30 +3,7 @@ import UseMemoComponent from './UseMemoComponent';
 import ReactMemoComponent from './ReactMemoComponent';
 
 const App = () => {
-  const [todos, setTodos] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [newTodo, setNewTodo] = useState('');
-
-  const incrementCounter = () => {
-    setCounter(counter + 1);
-  };
-
-  const handleNewTodoChange = (event) => {
-    setNewTodo(event.target.value);
-  };
-
-  const addTodo = () => {
-    if (newTodo.length > 5) {
-      setTodos([...todos, newTodo]);
-      setNewTodo('');
-    }
-  };
-
-  // Calculate expensive calculation using useMemo
-  const expensiveCalculation = useMemo(() => {
-    console.log('Expensive Calculation'); 
-    return todos.length * 1000; 
-  }, [todos]); 
+  // ... existing code ...
 
   return (
     <div>
