@@ -9,11 +9,11 @@ const App = () => {
   const [skills, setSkills] = useState([]);
 
   const addTodo = () => {
-    setTodos([...todos, "New todo"]);
+    setTodos((prevTodos) => [...prevTodos, "New todo"]);
   };
 
   const increment = () => {
-    setCount(count + 1);
+    setCount((prevCount) => prevCount + 1);
   };
 
   const handleInputChange = (e) => {
@@ -22,14 +22,14 @@ const App = () => {
 
   const submitTodo = () => {
     if (inputValue.length > 5) {
-      setTodos([...todos, inputValue]);
+      setTodos((prevTodos) => [...prevTodos, inputValue]);
       setInputValue("");
     }
   };
 
   const addSkill = () => {
-    if (inputValue.length > 0) {
-      setSkills([...skills, inputValue]);
+    if (inputValue.length > 5) {
+      setSkills((prevSkills) => [...prevSkills, inputValue]);
       setInputValue("");
     }
   };
@@ -39,9 +39,25 @@ const App = () => {
   return (
     <div>
       <h1>Todo List</h1>
-      <button id="add-todo" onClick={addTodo}>Add todo</button>
-      <button id="increment" onClick={increment}>Increment</button>
-      <p id="count">Count: {count}</p>
+      
+      <h2>React.useMemo</h2>
+      <h3>My todos</h3>
+      <ul id="todo-list">
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
+      <button id="add-todo" onClick={addTodo}>Add Todo</button>
+
+      <p>
+        Count: <span id="count">{count}</span>
+        <button id="increment" onClick={increment}>+</button>
+      </p>
+
+      <h3>Expensive Calculation</h3>
+      <UseMemoComponent todos={memoizedTodos} />
+
+      <h2>React.memo</h2>
       <input
         id="task-input"
         type="text"
@@ -51,8 +67,14 @@ const App = () => {
       />
       <button id="submit-todo" onClick={submitTodo}>Submit</button>
       <button id="add-skill" onClick={addSkill}>Add Skill</button>
-      <UseMemoComponent todos={memoizedTodos} />
-      <ReactMemoComponent todos={todos} />
+
+      <ul id="skills-list">
+        {skills.map((skill, index) => (
+          <li key={index}>{skill}</li>
+        ))}
+      </ul>
+
+      <ReactMemoComponent skills={skills} />
     </div>
   );
 };
