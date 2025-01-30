@@ -38,7 +38,7 @@ function App() {
         onChange={handleInputChange}
         placeholder="Enter custom task"
       />
-      <button onClick={handleSubmit}>Submit</button>
+      <button id="addSkillButton" onClick={handleSubmit}>Submit</button>
       <div>
         <h3>Tasks:</h3>
         <ul>
