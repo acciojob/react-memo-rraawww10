@@ -1,82 +1,57 @@
-import React, { useState, useMemo } from "react";
-import UseMemoComponent from "./UseMemoComponent";
-import ReactMemoComponent from "./ReactMemoComponent";
+import React, { useState, useEffect } from 'react';
+import UseMemo from './UseMemo';
+import ReactMemo from './ReactMemo';
 
-const App = () => {
-  const [todos, setTodos] = useState([]);
-  const [count, setCount] = useState(0);
-  const [inputValue, setInputValue] = useState("");
-  const [skills, setSkills] = useState([]);
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [customTask, setCustomTask] = useState('');
 
-  const addTodo = () => {
-    setTodos((prevTodos) => [...prevTodos, "New todo"]);
+  const handleAddTodo = () => {
+    setTasks([...tasks, 'New todo']);
   };
 
-  const increment = () => {
-    setCount((prevCount) => prevCount + 1);
+  const handleIncrement = () => {
+    setCounter(counter + 1);
   };
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    setCustomTask(e.target.value);
   };
 
-  const submitTodo = () => {
-    if (inputValue.length > 5) {
-      setTodos((prevTodos) => [...prevTodos, inputValue]);
-      setInputValue("");
+  const handleSubmit = () => {
+    if (customTask.length > 5) {
+      setTasks([...tasks, customTask]);
+      setCustomTask('');
+    } else {
+      alert('Task must have more than 5 characters.');
     }
   };
-
-  const addSkill = () => {
-    if (inputValue.length > 5) {
-      setSkills((prevSkills) => [...prevSkills, inputValue]);
-      setInputValue("");
-    }
-  };
-
-  const memoizedTodos = useMemo(() => todos, [todos]);
 
   return (
     <div>
-      <h1>Todo List</h1>
-      
-      <h2>React.useMemo</h2>
-      <h3>My todos</h3>
-      <ul id="todo-list">
-        {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
-        ))}
-      </ul>
-      <button id="add-todo" onClick={addTodo}>Add Todo</button>
-
-      <p>
-        Count: <span id="count">{count}</span>
-        <button id="increment" onClick={increment}>+</button>
-      </p>
-
-      <h3>Expensive Calculation</h3>
-      <UseMemoComponent todos={memoizedTodos} />
-
-      <h2>React.memo</h2>
+      <button onClick={handleAddTodo}>Add todo</button>
+      <button onClick={handleIncrement}>Increment</button>
       <input
-        id="task-input"
         type="text"
-        value={inputValue}
+        value={customTask}
         onChange={handleInputChange}
-        placeholder="Enter task"
+        placeholder="Enter custom task"
       />
-      <button id="submit-todo" onClick={submitTodo}>Submit</button>
-      <button id="add-skill" onClick={addSkill}>Add Skill</button>
-
-      <ul id="skills-list">
-        {skills.map((skill, index) => (
-          <li key={index}>{skill}</li>
-        ))}
-      </ul>
-
-      <ReactMemoComponent skills={skills} />
+      <button onClick={handleSubmit}>Submit</button>
+      <div>
+        <h3>Tasks:</h3>
+        <ul>
+          {tasks.map((task, index) => (
+            <li key={index}>{task}</li>
+          ))}
+        </ul>
+      </div>
+      <h4>Counter: {counter}</h4>
+      <UseMemo tasks={tasks} />
+      <ReactMemo tasks={tasks} />
     </div>
   );
-};
+}
 
 export default App;
