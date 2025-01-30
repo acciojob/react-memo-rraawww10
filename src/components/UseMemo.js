@@ -1,20 +1,25 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from "react";
 
-function UseMemo({ tasks }) {
-  const memoizedTasks = useMemo(() => {
-    return tasks.filter((task) => task.includes('todo'));
-  }, [tasks]);
+const UseMemo = () => {
+  const [count, setCount] = useState(0);
 
+  const result = useMemo(() => {
+    return count * 2;
+  }, [count]);
+
+  const onIncrease = () => {
+    setCount(count + 1);
+  };
   return (
     <div>
-      <h3>Memoized Tasks:</h3>
-      <ul>
-        {memoizedTasks.map((task, index) => (
-          <li key={index}>{task}</li>
-        ))}
-      </ul>
+      <div>
+        <span>Count:{count}</span>
+        <button onClick={onIncrease}>+</button>
+      </div>
+      <h2>Expensive Calculation</h2>
+      {result}
     </div>
   );
-}
+};
 
 export default UseMemo;
