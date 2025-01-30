@@ -30,9 +30,9 @@ function App() {
 
   return (
     <div>
-      <button onClick={handleAddTodo}>Add todo</button>
+      <button id="addTodoButton" onClick={handleAddTodo}>Add todo</button>
       <button onClick={handleIncrement}>Increment</button>
-      <input
+      <input id="customTaskInput"
         type="text"
         value={customTask}
         onChange={handleInputChange}
