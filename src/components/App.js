@@ -1,57 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import UseMemo from './UseMemo';
-import ReactMemo from './ReactMemo';
+import React, { useState } from "react";
+import UseMemo from "./UseMemo";
+import ReactMemo from "./ReactMemo";
 
-function App() {
+const App = () => {
   const [tasks, setTasks] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [customTask, setCustomTask] = useState('');
 
-  const handleAddTodo = () => {
-    setTasks([...tasks, 'New todo']);
+  const onAdd = () => {
+    setTasks((prev) => [...prev, "New Todo"]);
   };
-
-  const handleIncrement = () => {
-    setCounter(counter + 1);
-  };
-
-  const handleInputChange = (e) => {
-    setCustomTask(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    if (customTask.length > 5) {
-      setTasks([...tasks, customTask]);
-      setCustomTask('');
-    } else {
-      alert('Task must have more than 5 characters.');
-    }
-  };
-
   return (
-    <div>
-      <button id="addTodoButton" onClick={handleAddTodo}>Add todo</button>
-      <button onClick={handleIncrement}>Increment</button>
-      <input id="customTaskInput"
-        type="text"
-        value={customTask}
-        onChange={handleInputChange}
-        placeholder="Enter custom task"
-      />
-      <button id="addSkillButton" onClick={handleSubmit}>Submit</button>
-      <div>
-        <h3>Tasks:</h3>
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>{task}</li>
-          ))}
-        </ul>
-      </div>
-      <h4>Counter: {counter}</h4>
-      <UseMemo tasks={tasks} />
-      <ReactMemo tasks={tasks} />
+    <div id="main">
+      <h1>React.useMemo</h1>
+      <h2>My todos</h2>
+      <ul>
+        {tasks.map((i, index) => (
+          <li key={index}>{i}</li>
+        ))}
+      </ul>
+
+      <button onClick={onAdd}>Add Todo</button>
+
+      <hr />
+      <UseMemo />
+      <hr />
+      <hr />
+      <ReactMemo />
     </div>
   );
-}
+};
 
 export default App;
